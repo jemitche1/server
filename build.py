@@ -1024,7 +1024,7 @@ def container_build(images, backends, repoagents, endpoints):
         create_dockerfile_build(FLAGS.build_dir, 'Dockerfile.build', backends)
         p = subprocess.Popen([
             'docker', 'build', '-t', 'tritonserver_build', '-f',
-            os.path.join(FLAGS.build_dir, 'Dockerfile.build')] + os.environ['DOCKER_BUILD_ARGS'].split() + ['.']))
+            os.path.join(FLAGS.build_dir, 'Dockerfile.build')] + os.environ['DOCKER_BUILD_ARGS'].split() + ['.'])
         p.wait()
         fail_if(p.returncode != 0, 'docker build tritonserver_build failed')
 
