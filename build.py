@@ -1017,12 +1017,14 @@ def container_build(images, backends, repoagents, endpoints):
 
         container.commit('tritonserver_builder_image', 'latest')
         container.remove(force=True)
-
+        
+        build_args = os.environ['DOCKER_BUILD_ARGS'] 
+        print("****************************\n" + str(build_args) + "**\n**********")
+        
         create_dockerfile_build(FLAGS.build_dir, 'Dockerfile.build', backends)
         p = subprocess.Popen([
             'docker', 'build', '-t', 'tritonserver_build', '-f',
-            os.path.join(FLAGS.build_dir, 'Dockerfile.build'), '.'
-        ])
+            os.path.join(FLAGS.build_dir, 'Dockerfile.build')] + os.environ['DOCKER_BUILD_ARGS'].split() + ['.']))
         p.wait()
         fail_if(p.returncode != 0, 'docker build tritonserver_build failed')
 
@@ -1039,7 +1041,7 @@ def container_build(images, backends, repoagents, endpoints):
         p = subprocess.Popen([
             'docker', 'build', '-f',
             os.path.join(FLAGS.build_dir, 'Dockerfile')
-        ] + ['-t', 'tritonserver', '.'])
+        ] + ['-t', 'tritonserver'] + os.environ['DOCKER_BUILD_ARGS'].split() + ['.']))
         p.wait()
         fail_if(p.returncode != 0, 'docker build tritonserver failed')
 
