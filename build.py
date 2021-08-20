@@ -911,7 +911,7 @@ def container_build(images, backends, repoagents, endpoints):
         # Create buildbase image, this is an image with all
         # dependencies needed for the build.
         p = subprocess.Popen(commonargs + cachefromargs +
-                             ['-t', 'tritonserver_buildbase', '.'])
+                             ['-t', 'tritonserver_buildbase']  + os.environ['DOCKER_BUILD_ARGS'].split() + ['.']) 
         p.wait()
         fail_if(p.returncode != 0, 'docker build tritonserver_buildbase failed')
 
