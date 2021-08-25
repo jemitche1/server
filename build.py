@@ -498,7 +498,7 @@ def install_dcgm_libraries(dcgm_version):
         return '''
 ENV DCGM_VERSION {}
 # Install DCGM. Steps from https://developer.nvidia.com/dcgm#Downloads
-RUN rm /etc/apt/sources.list.d/cuda.list && apt-get update && apt-get install -y --no-install-recommends software-properties-common 
+RUN sudo rm /etc/apt/sources.list.d/cuda.list && apt-get update && apt-get install -y --no-install-recommends software-properties-common 
 RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin \
 && mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600 \
 && apt-key adv --fetch-keys --keyserver-options http-proxy=http://child-prc.intel.com:913 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub \
