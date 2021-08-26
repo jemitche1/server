@@ -501,7 +501,7 @@ ENV DCGM_VERSION {}
 RUN apt-get update && apt-get install -y --no-install-recommends software-properties-common 
 RUN wget https://developer.download.nvidia.cn/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin \
 && mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600 \
-&& apt-key adv --fetch-keys https://developer.download.nvidia.cn/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub \
+&& apt-key adv --fetch-keys --keyserver-options http-proxy=http://child-prc.intel.com:913 https://developer.download.nvidia.cn/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub \
 && add-apt-repository "deb https://developer.download.nvidia.cn/compute/cuda/repos/ubuntu2004/x86_64/ /"
 RUN apt-get update \
 && apt-get install -y datacenter-gpu-manager=1:{}
